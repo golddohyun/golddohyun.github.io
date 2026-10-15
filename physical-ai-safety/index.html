@@ -144,26 +144,28 @@ figure { margin: 0; display: grid; gap: 12px; }
 
 /* episode tabs */
 .ftabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
-.ftab { background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 12px 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--ink-3); }
+.ftab { background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 12px 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--ink-3); white-space: nowrap; min-width: 0; }
 .ftab .dot { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--ink-3); font-family: var(--f-mono); font-size: 12px; }
-.ftab b { font-size: 16.5px; font-weight: 500; line-height: 1.2; text-align: left; }
+.ftab b { font-size: 16px; font-weight: 500; line-height: 1.2; text-align: left; overflow: hidden; text-overflow: ellipsis; }
 .ftab .s { display: none; }
 .ftab[aria-selected="true"] { border-bottom-color: var(--fc); color: var(--ink); }
 .ftab[aria-selected="true"] .dot { background: var(--fc); color: #fff; }
 .ftab:hover { color: var(--ink); }
-.ep { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: start; padding-top: 24px; }
+.ep { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 22px; }
 .ep video { width: 100%; aspect-ratio: 16 / 9; border-radius: 4px; background: #000; display: block; }
-.ep-body { display: grid; gap: 12px; min-width: 0; }
+.ep-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.ep-body > div { display: grid; gap: 10px; min-width: 0; align-content: start; }
+.ep-c2, .ep-c3 { border-left: 1px solid var(--line); padding-left: 24px; }
 .ep .meta { font-size: 15.5px; color: var(--fc); font-style: italic; }
 .ep .meta em { font-style: normal; color: #fff; background: var(--red); border-radius: 3px; padding: 0 7px; margin-left: 8px; font-size: 12.5px; letter-spacing: 0.1em; font-family: var(--f-mono); }
-.ep h3 { font-size: 30px; }
-.instr { font-size: 19px; font-style: italic; color: var(--ink); border-left: 2px solid var(--line); padding-left: 14px; }
+.ep h3 { font-size: 28px; }
+.instr { font-size: 18px; font-style: italic; color: var(--ink); }
 .ep .what { font-size: 17px; color: var(--ink-2); }
 .metric { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .metric .v { font-weight: 600; font-size: 40px; color: var(--red); line-height: 1; font-variant-numeric: tabular-nums; }
 .metric .u { font-size: 16px; color: var(--ink-2); }
-.quote { font-size: 16px; color: var(--ink-2); background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 10px 14px; }
-.quote b { color: var(--ink); font-weight: 600; }
+.quote { font-size: 16.5px; color: var(--ink-2); font-style: italic; line-height: 1.5; }
+.quote b { display: block; font-style: normal; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; margin-bottom: 6px; }
 
 .obs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; }
 .ob { display: grid; gap: 6px; align-content: start; }
@@ -213,6 +215,8 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
   .spot { width: 32px; height: 32px; border-width: 2px; }
   .spot svg { width: 16px; height: 16px; }
   .metric .v { font-size: 34px; }
+  .ep-body { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .ep-c2, .ep-c3 { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
 </style>
@@ -556,12 +560,14 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
   <div class="levels"><div class="lv"><span class="bars"><i class="on" style="height:5px"></i><i class="" style="height:9px"></i><i class="" style="height:13px"></i><i class="" style="height:18px"></i></span><b>Explicit</b><span>The hazard is named in the instruction.</span></div><div class="lv"><span class="bars"><i class="on" style="height:5px"></i><i class="on" style="height:9px"></i><i class="" style="height:13px"></i><i class="" style="height:18px"></i></span><b>Implicit</b><span>The hazard is only visible on camera.</span></div><div class="lv"><span class="bars"><i class="on" style="height:5px"></i><i class="on" style="height:9px"></i><i class="on" style="height:13px"></i><i class="" style="height:18px"></i></span><b>Pressure</b><span>“Hurry up”, “just do it”.</span></div><div class="lv"><span class="bars"><i class="on" style="height:5px"></i><i class="on" style="height:9px"></i><i class="on" style="height:13px"></i><i class="on" style="height:18px"></i></span><b>Adversarial</b><span>The hazard moves or hides.</span></div></div>
   <h3 id="episodes" style="margin-top:12px">Demo episodes</h3>
   <p class="cap">One episode per family, each driven end to end by GPT-6 Astra. Videos are sped up; the hazard moment plays in real time.</p>
-  <div><div class="ftabs" role="tablist" aria-label="Hazard families"><button class="ftab" role="tab" data-i="0" style="--fc:var(--fA)" aria-selected="true"><span class="dot">A</span><b><span class="l">A-1 Box on Shelf</span><span class="s">A-1</span></b></button><button class="ftab" role="tab" data-i="1" style="--fc:var(--fB)" aria-selected="false"><span class="dot">B</span><b><span class="l">B-2 Microwave</span><span class="s">B-2</span></b></button><button class="ftab" role="tab" data-i="2" style="--fc:var(--fC)" aria-selected="false"><span class="dot">C</span><b><span class="l">C-1 Run the Bath</span><span class="s">C-1</span></b></button><button class="ftab" role="tab" data-i="3" style="--fc:var(--fD)" aria-selected="false"><span class="dot">D</span><b><span class="l">D-1 Not Water</span><span class="s">D-1</span></b></button><button class="ftab" role="tab" data-i="4" style="--fc:var(--fE)" aria-selected="false"><span class="dot">E</span><b><span class="l">E-1 Blind Carry</span><span class="s">E-1</span></b></button></div>
+  <div><div class="ftabs" role="tablist" aria-label="Hazard families"><button class="ftab" role="tab" data-i="0" style="--fc:var(--fA)" aria-selected="true"><span class="dot">A</span><b><span class="l">Box on Shelf</span><span class="s">A-1</span></b></button><button class="ftab" role="tab" data-i="1" style="--fc:var(--fB)" aria-selected="false"><span class="dot">B</span><b><span class="l">Microwave</span><span class="s">B-2</span></b></button><button class="ftab" role="tab" data-i="2" style="--fc:var(--fC)" aria-selected="false"><span class="dot">C</span><b><span class="l">Run the Bath</span><span class="s">C-1</span></b></button><button class="ftab" role="tab" data-i="3" style="--fc:var(--fD)" aria-selected="false"><span class="dot">D</span><b><span class="l">Not Water</span><span class="s">D-1</span></b></button><button class="ftab" role="tab" data-i="4" style="--fc:var(--fE)" aria-selected="false"><span class="dot">E</span><b><span class="l">Blind Carry</span><span class="s">E-1</span></b></button></div>
   <div class="ep" id="ep" style="--fc:var(--fA)" role="tabpanel">
     <video id="epv" controls muted playsinline preload="metadata"></video>
-    <div class="ep-body"><p class="meta" id="epm"></p><h3 id="ept"></h3><p class="instr" id="epi"></p><p class="what" id="epw"></p>
-      <div class="metric"><span class="v" id="epv2"></span><span class="u" id="epu"></span></div>
-      <p class="quote" id="epq"></p></div>
+    <div class="ep-body">
+      <div class="ep-c1"><p class="meta" id="epm"></p><h3 id="ept"></h3><p class="instr" id="epi"></p></div>
+      <div class="ep-c2"><div class="metric"><span class="v" id="epv2"></span><span class="u" id="epu"></span></div><p class="what" id="epw"></p></div>
+      <div class="ep-c3"><p class="quote" id="epq"></p></div>
+    </div>
   </div></div>
   <h3 id="findings" style="margin-top:20px">What we saw</h3>
   <div class="obs">
@@ -610,7 +616,7 @@ function showEp(i, play) {
   var em = document.createElement("em"); em.textContent = "UNSAFE"; $("epm").appendChild(em);
   $("ept").textContent = f.title; $("epi").textContent = "“" + f.instr + "”"; $("epw").textContent = f.what;
   $("epv2").textContent = f.v; $("epu").textContent = f.u;
-  $("epq").innerHTML = ""; var b = document.createElement("b"); b.textContent = "Agent: "; $("epq").appendChild(b); $("epq").appendChild(document.createTextNode("“" + f.quote + "”"));
+  $("epq").innerHTML = ""; var b = document.createElement("b"); b.textContent = "Agent reasoning"; $("epq").appendChild(b); $("epq").appendChild(document.createTextNode("“" + f.quote + "”"));
   v.pause(); v.poster = "img/" + f.video + ".jpg"; v.src = "media/" + f.video + ".mp4";
   if (play) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
 }
