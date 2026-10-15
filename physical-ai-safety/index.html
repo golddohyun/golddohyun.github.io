@@ -151,11 +151,11 @@ figure { margin: 0; display: grid; gap: 12px; }
 .ftab[aria-selected="true"] { border-bottom-color: var(--fc); color: var(--ink); }
 .ftab[aria-selected="true"] .dot { background: var(--fc); color: #fff; }
 .ftab:hover { color: var(--ink); }
-.ep { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 22px; }
+.ep { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 22px; max-width: 780px; margin-inline: auto; width: 100%; }
 .ep video { width: 100%; aspect-ratio: 16 / 9; border-radius: 4px; background: #000; display: block; }
-.ep-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.ep-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .ep-body > div { display: grid; gap: 10px; min-width: 0; align-content: start; }
-.ep-c2, .ep-c3 { border-left: 1px solid var(--line); padding-left: 24px; }
+.ep-c2, .ep-c3 { border-left: 1px solid var(--line); padding-left: 20px; }
 .ep .meta { font-size: 15.5px; color: var(--fc); font-style: italic; }
 .ep .meta em { font-style: normal; color: #fff; background: var(--red); border-radius: 3px; padding: 0 7px; margin-left: 8px; font-size: 12.5px; letter-spacing: 0.1em; font-family: var(--f-mono); }
 .ep h3 { font-size: 28px; }
@@ -379,17 +379,12 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
 <text x="391.0" y="693.6" font-size="10.5" fill="#5E7F5C" font-weight="600" text-anchor="middle" letter-spacing="0.14em" transform="rotate(90 391.0 693.6)">READ BEFORE EACH EPISODE</text>
 </svg>
     <figcaption class="cap"><b>Figure 1.</b> One step of the agent loop, taken from a real episode. Before acting, the agent writes the numbers it expects. The executor returns what it measured. After each episode, working skills and notes go into memory for the next one.</figcaption></figure>
-  <div class="ideas">
-    <div class="idea"><b>Expect, then measure</b><p>Every action comes with expected ranges. The receipt shows at once whether the robot did what the agent thought it would.</p></div>
-    <div class="idea"><b>Skills it writes and keeps</b><p>Motions that worked are saved as code with the conditions they worked under, and reused in the next episode.</p></div>
-    <div class="idea"><b>An executor that never decides</b><p>It runs, measures and guards. Every strategy choice stays with the model.</p></div>
-  </div>
   <div class="vpair">
     <figure><video src="media/demo_L1R_opus_PASS_x3.mp4" poster="img/demo_L1R_opus_PASS_x3.jpg" controls muted playsinline preload="none"></video><figcaption class="cap"><b>Claude Opus 5.5</b> picks up a stick and pushes the ball into the ring.</figcaption></figure>
     <figure><video src="media/demo_Tstrict_astra3_in_ring_x3.mp4" poster="img/demo_Tstrict_astra3_in_ring_x3.jpg" controls muted playsinline preload="none"></video><figcaption class="cap"><b>GPT-6 Astra</b> on the same task with a stricter layout.</figcaption></figure>
   </div>
   <p class="cap">Tasks and success checks from <a href="https://snu-pi.github.io/HumanoidToolBench/" target="_blank" rel="noopener">HumanoidToolBench</a>. Videos play at 3× speed.</p>
-</div><aside class="notes"><div class="note"><span class="c">RC</span><b>Receipt</b><span>Commanded, measured and residual values returned by every call.</span></div><div class="note"><span class="c">ER</span><b>Expected ranges</b><span>Numbers the agent commits to before it acts.</span></div><div class="note"><span class="c">SK</span><b>Skill</b><span>Code plus the conditions it worked under.</span></div><div class="note"><span class="c">BC</span><b>Body card</b><span>Facts measured on this robot, read before every episode.</span></div><div class="note"><span class="c">GD</span><b>Guards</b><span>Stop a bad motion and report. They never decide.</span></div></aside></div></section>
+</div><aside class="notes"><div class="note"><span class="c">ST</span><b>Step loop</b><span>Before acting, the agent writes the numbers it expects. The receipt returns what was measured.</span></div><div class="note"><span class="c">SE</span><b>Self-evolving loop</b><span>Skills that worked are saved as code and read before the next episode.</span></div><div class="note"><span class="c">EX</span><b>Executor</b><span>Runs, measures and guards. Never chooses the next move.</span></div></aside></div></section>
 <section class="part" id="scenes"><div class="row"><div class="sec-main"><div class="part-head"><h2>Hazards that behave physically</h2>
   <p>A safety test only counts if the accident really happens in the simulator: the toolbox falls with its real mass, the water rises, the bleach lands in the cup. We rebuild a real space from a few photos and give every hazard the physics engine that models it best.</p></div>
   <div class="tabs" role="tablist" aria-label="Scene building" data-group="scene">
