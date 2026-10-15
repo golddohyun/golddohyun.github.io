@@ -96,6 +96,14 @@ h3 { font-size: 22px; font-weight: 700; }
 .note { border-left: 3px solid var(--accent); padding: 6px 0 6px 16px; color: var(--ink-2); font-size: 15.5px; max-width: 72ch; }
 .note b { color: var(--ink); }
 
+/* scale-to-fit figures (keep the desktop layout on small screens) */
+.fit { position: relative; width: 100%; min-width: 0; max-width: 100%; overflow: hidden; }
+section.part, .sub { grid-template-columns: minmax(0, 1fr); }
+.fit > * { transform-origin: 0 0; }
+.fit.is-scaled .pipe-wrap { overflow: visible; }
+.fit-hint { display: none; font-size: 12.5px; color: var(--ink-3); }
+.fit.is-scaled + .fit-hint { display: block; }
+
 /* agent pipeline figure */
 .arch { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 14px; }
 .arch-row { display: grid; grid-template-columns: minmax(0, 0.85fr) 28px minmax(0, 1.05fr) 28px minmax(0, 1.35fr); align-items: stretch; }
@@ -300,14 +308,8 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
 
 @media (max-width: 900px) {
   .eval-top, .ep, .next, .hmap { grid-template-columns: minmax(0, 1fr); }
-  .arch-row { grid-template-columns: minmax(0, 1fr); }
-  .arr { height: 28px; }
-  .arr::before { top: 4px; bottom: 10px; left: 50%; right: auto; width: 2px; height: auto; }
-  .arr::after { top: auto; bottom: 3px; right: auto; left: calc(50% - 5px); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--accent); border-bottom: 0; }
-  .mem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .kicks { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .panel.score { grid-template-columns: minmax(0, 1fr); }
-  .fstrip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
@@ -315,7 +317,12 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
   .overview, .vgrid { grid-template-columns: minmax(0, 1fr); }
   .overview a + a { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
   .obs { grid-template-columns: minmax(0, 1fr); }
-  .fstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fstrip { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .fi { padding: 12px 4px 10px; gap: 4px; border-radius: 12px; }
+  .fi-ic { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px; }
+  .fi-ic svg { width: 24px; height: 24px; }
+  .fi b { font-size: 11.5px; }
+  .fi > span:last-child { display: none; }
 
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spot { width: 28px; height: 28px; font-size: 10px; }
@@ -357,6 +364,7 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
       <p>No robot policy is trained for these tasks. A language model drives the humanoid through skills it writes as code, and learns from what the robot actually measured.</p>
     </div>
 
+    <div class="fit" data-w="960">
     <figure class="arch" id="arch" aria-label="Agent pipeline with a step loop and a self-evolving episode loop">
       <svg class="loops" id="loops" aria-hidden="true"></svg>
       <div class="arch-row">
@@ -414,6 +422,8 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
         </div>
       </div>
     </figure>
+    </div>
+    <p class="fit-hint">Pinch to zoom into the figure.</p>
 
     <ol class="kicks">
       <li><b class="kb">1</b><div><b>Step loop: expect, then measure.</b> Before every action the agent writes the numbers it expects. The receipt shows what the robot measured.</div></li>
@@ -444,7 +454,7 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
 
     <div class="sub">
       <h3>From a few photos to a hazard-ready house</h3>
-      <div class="pipe-wrap">
+      <div class="fit" data-w="1000"><div class="pipe-wrap">
         <div class="pipe">
           <div class="st"><div class="st-img fan"><img src="img/fs_001.jpg" alt="Phone photo of the lab, corner 1" loading="lazy"><img src="img/fs_002.jpg" alt="Phone photo of the lab, corner 2" loading="lazy"><img src="img/fs_006.jpg" alt="Phone photo of the lab, corner 3" loading="lazy"></div><span class="n">01</span><b>Few-shot photos</b><span>A handful of corner shots from a phone.</span></div>
           <div class="st"><div class="st-img white contain"><img src="img/plan.jpg" alt="Top view of the rebuilt room layout" loading="lazy"></div><span class="n">02</span><b>Measure the room</b><span>Walls, doors, pads and every object counted and sized from the photos.</span></div>
@@ -454,7 +464,7 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
           <div class="st"><div class="st-img white contain"><img src="img/house.png" alt="Connected lab, kitchen and bathroom" loading="lazy"></div><span class="n">06</span><b>Join rooms and people</b><span>Kitchen, bathroom, adults and children with physics bodies.</span></div>
           <div class="st"><div class="st-img"><img src="img/stage_hazard.jpg" alt="Toolbox knocked onto a child" loading="lazy"></div><span class="n">07</span><b>Inject the hazard</b><span>Each scenario is verified: a scripted unsafe run must cause the accident, a safe run must cause none.</span></div>
         </div>
-      </div>
+      </div></div>
       <p class="why">Browse every object with its mass, collider and source photos in the <a href="https://golddohyun.github.io/lab-twin-e6/" target="_blank" rel="noopener">interactive room explorer</a>.</p>
     </div>
 
@@ -626,11 +636,21 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
   /* ---------- Part 1: loop arrows ---------- */
+  function fitAll() {
+    Array.prototype.forEach.call(document.querySelectorAll(".fit"), function (f) {
+      var inner = f.firstElementChild, W = +f.dataset.w, avail = f.clientWidth;
+      if (avail >= W) { inner.style.width = ""; inner.style.transform = ""; f.style.height = ""; f.classList.remove("is-scaled"); inner.dataset.s = 1; return; }
+      var s = avail / W; f.classList.add("is-scaled");
+      inner.style.width = W + "px"; inner.style.transform = "scale(" + s + ")"; inner.dataset.s = s;
+      f.style.height = (inner.offsetHeight * s) + "px";
+    });
+  }
   var arch = document.getElementById("arch"), svgL = document.getElementById("loops");
   function drawLoops() {
     if (!arch || !svgL) return;
-    var A = arch.getBoundingClientRect();
-    function r(id) { var b = document.getElementById(id).getBoundingClientRect(); return { l: b.left - A.left, r: b.right - A.left, t: b.top - A.top, b: b.bottom - A.top, cx: (b.left + b.right) / 2 - A.left, cy: (b.top + b.bottom) / 2 - A.top }; }
+    var sc = parseFloat(arch.dataset.s || "1") || 1;
+    var A0 = arch.getBoundingClientRect(), A = { left: A0.left, top: A0.top, width: arch.offsetWidth, height: arch.offsetHeight };
+    function r(id) { var b = document.getElementById(id).getBoundingClientRect(); var l = (b.left - A.left) / sc, rr = (b.right - A.left) / sc, tt = (b.top - A.top) / sc, bb = (b.bottom - A.top) / sc; return { l: l, r: rr, t: tt, b: bb, cx: (l + rr) / 2, cy: (tt + bb) / 2 }; }
     var o = r("apObs"), g = r("apAgent"), e = r("apExec"), m = r("mem"), rc = r("rcp");
     var stacked = Math.abs(o.t - e.t) > 40; // narrow screens: panels stack vertically
     var ns = "http://www.w3.org/2000/svg", parts = [];
@@ -643,7 +663,7 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
       var xw = e.cx + Math.min(90, (e.r - e.l) / 3), xr = g.cx;
       parts.push('<path class="lp-evo" d="M' + xw + ',' + e.b + ' V' + (m.t - 10) + '"/>'); head(xw, m.t - 1, "down", "ah-evo");
       parts.push('<path class="lp-evo" d="M' + xr + ',' + m.t + ' V' + (g.b + 10) + '"/>'); head(xr, g.b + 1, "up", "ah-evo");
-      var rcpEl = document.getElementById("rcp"), sr = rcpEl.parentNode.getBoundingClientRect();
+      var rcpEl = document.getElementById("rcp"), sr0 = rcpEl.parentNode.getBoundingClientRect(), sr = { left: A.left + (sr0.left - A.left) / sc };
       var w = rcpEl.offsetWidth, mid = (o.cx + e.cx) / 2 - (sr.left - A.left);
       rcpEl.style.position = "absolute"; rcpEl.style.left = Math.max(0, mid - w / 2) + "px"; rcpEl.style.top = "50%"; rcpEl.style.transform = "translateY(-50%)";
       var ts = document.getElementById("tagStep"); ts.style.left = Math.max(0, o.cx - (sr.left - A.left) + 12) + "px";
@@ -656,11 +676,12 @@ footer { margin-top: 80px; padding-top: 22px; border-top: 1px solid var(--line);
     }
     svgL.innerHTML = parts.join("");
   }
-  window.addEventListener("resize", drawLoops);
-  window.addEventListener("load", drawLoops);
-  Array.prototype.forEach.call(document.querySelectorAll("#arch img"), function (im) { im.addEventListener("load", drawLoops); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLoops);
-  drawLoops();
+  function layout() { fitAll(); drawLoops(); fitAll(); }
+  window.addEventListener("resize", layout);
+  window.addEventListener("load", layout);
+  Array.prototype.forEach.call(document.querySelectorAll(".fit img"), function (im) { im.addEventListener("load", layout); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  layout();
 
   /* ---------- Part 2: hazard map ---------- */
   var SPOTS = [
